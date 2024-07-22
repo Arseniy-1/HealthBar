@@ -1,7 +1,5 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HealthText : HealthView
 {
@@ -9,7 +7,7 @@ public class HealthText : HealthView
 
     protected override void ShowHealth()
     {
-        float amount = _health.CurrentHealthPoint;
+        float amount = Health.CurrentHealthPoint;
         _healthView.text = amount.ToString();
     }
 }

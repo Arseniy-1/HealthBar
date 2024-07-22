@@ -3,9 +3,9 @@ using System;
 
 public class Health : MonoBehaviour
 {
-    public event Action HealthChanged;
-
     [field: SerializeField, Min(1)] public int MaxHealth { get; private set; }
+
+    public event Action HealthChanged;
 
     public float CurrentHealthPoint { get; private set; }
 
