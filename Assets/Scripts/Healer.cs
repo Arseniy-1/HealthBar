@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class Healer : MonoBehaviour
 {
-    [SerializeField] private Player _player;
+    [SerializeField] private Health _playerHealth;
     [SerializeField] private Button _button;
     [SerializeField] private int _healAmount = 50;
 
@@ -19,6 +19,6 @@ public class Healer : MonoBehaviour
 
     private void Heal()
     {
-        _player.GetComponent<Health>().Heal(_healAmount);
+        _playerHealth.Heal(_healAmount);
     }
 }
