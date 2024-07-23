@@ -5,7 +5,8 @@ public class Health : MonoBehaviour
 {
     [field: SerializeField, Min(1)] public int MaxHealth { get; private set; }
 
-    public event Action HealthChanged;
+    public event Action<float, float> HealthChanged;
+    public event Action Died;
 
     public float CurrentHealthPoint { get; private set; }
 
@@ -19,15 +20,9 @@ public class Health : MonoBehaviour
         if (amount <= 0)
             return;
 
-        if (CurrentHealthPoint + amount >= MaxHealth)
-        {
-            CurrentHealthPoint = MaxHealth;
-            HealthChanged?.Invoke();
-            return;
-        }
+        CurrentHealthPoint = Mathf.Clamp(CurrentHealthPoint + amount, 0, MaxHealth);
 
-        CurrentHealthPoint += amount;
-        HealthChanged?.Invoke();
+        HealthChanged?.Invoke(CurrentHealthPoint, MaxHealth);
     }
 
     public void TakeDamage(int amount)
@@ -35,14 +30,11 @@ public class Health : MonoBehaviour
         if (amount <= 0)
             return;
 
-        CurrentHealthPoint -= amount;
+        CurrentHealthPoint = Mathf.Clamp(CurrentHealthPoint - amount, 0, MaxHealth);
+        
+        if (CurrentHealthPoint == 0)
+            Died.Invoke();
 
-        if (CurrentHealthPoint <= 0)
-        {
-            Destroy(gameObject);
-            CurrentHealthPoint = 0;
-        }
-
-        HealthChanged?.Invoke();
+        HealthChanged?.Invoke(CurrentHealthPoint, MaxHealth);
     }
 }
